@@ -62,7 +62,7 @@
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - Donovanandrews300@gmail.com
+Donovan Andrews- Donovanandrews300@gmail.com
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
