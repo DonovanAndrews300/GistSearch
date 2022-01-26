@@ -1,4 +1,5 @@
 var express = require("express");
+var cors = require("cors");
 var { graphqlHTTP } = require("express-graphql");
 var { buildSchema } = require("graphql");
 
@@ -152,7 +153,7 @@ var readSchema = buildSchema(`
   }
   type Query {
     getUsers: [User],
-    getGists(userId:Int):[Gist],
+    getGists(username:String):[Gist],
     getGist(gistId:Int):Gist
   }
   type Mutation {
@@ -163,13 +164,14 @@ var readSchema = buildSchema(`
 
 // The root provides a resolver function for each API endpoint
 var root = {
-  getGists: ({ userId }) => {
+  getGists: ({ username }) => {
     let gists = null;
     githubUsers.forEach((user) => {
-      if (user.id === userId) {
+      if (user.userName === username) {
         gists = user.gists;
       }
     });
+    console.log(gists);
     return gists;
   },
 
@@ -209,6 +211,7 @@ var root = {
 };
 
 var app = express();
+app.use(cors());
 app.use(
   "/graphql",
   graphqlHTTP({
