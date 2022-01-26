@@ -22,17 +22,14 @@
   <p align="center">
     An app used to search github user gists
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+
   </p>
 </div>
 
 ### Built With
 
 * [React.js](https://reactjs.org/)
+* [GraphQl](https://graphql.org/)
 * [Express.js](https://expressjs.com)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -66,9 +63,7 @@
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - Donovanandrews300@gmail.com
-
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Donovan Andrews- Donovanandrews300@gmail.com
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
