@@ -29,7 +29,7 @@
 ### Built With
 
 * [React.js](https://reactjs.org/)
-* [GraphQl](https://graphql.org/)
+* [GraphQL](https://graphql.org/)
 * [Express.js](https://expressjs.com)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
