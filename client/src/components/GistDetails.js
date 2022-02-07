@@ -24,7 +24,11 @@ export default function GistDetails() {
       <li>Files: {files}</li>
       <li>
         Recommended:
-        <input type="checkbox" onChange={() => toggleRecommended()} />
+        <input
+          type="checkbox"
+          value={isRecommended}
+          onChange={() => toggleRecommended()}
+        />
       </li>
     </ul>
   );

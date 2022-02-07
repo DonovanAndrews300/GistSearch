@@ -154,6 +154,7 @@ var readSchema = buildSchema(`
   type Query {
     getUsers: [User],
     getGists(username:String):[Gist],
+    getRecommendedGists(username:String):[Gist],
     getGist(gistId:Int):Gist
   }
   type Mutation {
@@ -174,7 +175,15 @@ var root = {
 
     return gists;
   },
-
+  getRecommendedGists: ({ username }) => {
+    let gists = null;
+    githubUsers.forEach((user) => {
+      if (user.userName === username) {
+        gists = user.gists.filter((gist) => gist.recommended);
+      }
+    });
+    return gists;
+  },
   getGist: (gistId) => {
     let currentGist = null;
     githubUsers.forEach((user) => {

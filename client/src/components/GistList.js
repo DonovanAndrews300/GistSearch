@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useApi } from "../providers/DataProvider";
 export default function GistList({ userName, setShowDetails }) {
-  const { state, dispatch, getGists, getGist } = useApi();
+  const { state, dispatch, getGists, getGist, getRecommendedGists } = useApi();
   const { currentUser, currentGist } = state;
   useEffect(() => {
     getGists(userName)
@@ -19,6 +19,16 @@ export default function GistList({ userName, setShowDetails }) {
         setShowDetails(true);
       });
   };
+  const searchRecommendedGists = () => {
+    getRecommendedGists(userName)
+      .then((res) => res.json())
+      .then((res) => {
+        dispatch({
+          type: "GET_RECOMMENDED_USER_GISTS",
+          payload: res.data.getRecommendedGists,
+        });
+      });
+  };
 
   const renderGist = ({ id, description, date, recommended }) => {
     return (
@@ -32,7 +42,7 @@ export default function GistList({ userName, setShowDetails }) {
 
   return (
     <table>
-      {userName}
+      <button onClick={() => searchRecommendedGists()}>Only Recommended</button>
       <tbody>
         <tr>
           <th>description</th>

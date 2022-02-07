@@ -11,7 +11,8 @@ function dataReducer(state, action) {
   switch (action.type) {
     case "GET_USER_GISTS":
       return { ...state, currentUser: action.payload };
-
+    case "GET_RECOMMENDED_USER_GISTS":
+      return { ...state, currentUser: action.payload };
     case "GET_GIST":
       return { ...state, currentGist: action.payload };
 
@@ -52,27 +53,6 @@ export const DataProvider = ({ children }) => {
       console.log(error);
     }
   };
-  const updateRecommendedGist = (gistId) => {
-    return fetch("http://localhost:4000/graphql", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: `
-         mutation{
-            updateRecommendedGist(gistId:${gistId}) {
-              id
-              description
-              date
-            }}
-        `,
-        variables: {
-          now: new Date().toISOString(),
-        },
-      }),
-    });
-  };
   const getGists = (username) => {
     try {
       return fetch("http://localhost:4000/graphql", {
@@ -102,6 +82,57 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const getRecommendedGists = (username) => {
+    try {
+      return fetch("http://localhost:4000/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: `
+        {
+          getRecommendedGists(username:"${username}"){
+            id,
+            description,
+            date,
+            recommended,
+            files
+          }
+         }  
+        `,
+          variables: {
+            now: new Date().toISOString(),
+          },
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateRecommendedGist = (gistId) => {
+    return fetch("http://localhost:4000/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `
+         mutation{
+            updateRecommendedGist(gistId:${gistId}) {
+              id
+              description
+              date
+            }}
+        `,
+        variables: {
+          now: new Date().toISOString(),
+        },
+      }),
+    });
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -109,6 +140,7 @@ export const DataProvider = ({ children }) => {
         dispatch,
         getGist,
         getGists,
+        getRecommendedGists,
         updateRecommendedGist,
       }}
     >
