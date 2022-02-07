@@ -1,31 +1,46 @@
-import React from "react";
-
-export default function GistList() {
-  const getGists = (payload) => {
-    console.log(payload);
-    fetch("http://localhost:4000/graphql", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: `
-      {
-        getGists(username:${payload}){
-          files
-        }
-       }
-       
-        
-      `,
-        variables: {
-          now: new Date().toISOString(),
-        },
-      }),
-    })
+import React, { useEffect } from "react";
+import { useApi } from "../providers/DataProvider";
+export default function GistList({ userName, setShowDetails }) {
+  const { state, dispatch, getGists, getGist } = useApi();
+  const { currentUser, currentGist } = state;
+  useEffect(() => {
+    getGists(userName)
       .then((res) => res.json())
-      .then((result) => console.log(result));
+      .then((res) => {
+        dispatch({ type: "GET_USER_GISTS", payload: res.data.getGists });
+      });
+  }, [userName, currentGist]);
+
+  const selectGist = (id) => {
+    getGist(id)
+      .then((res) => res.json())
+      .then((res) => {
+        dispatch({ type: "GET_GIST", payload: res.data.getGist });
+        setShowDetails(true);
+      });
   };
-  getGists({ username: "Paul" });
-  return <div>testing</div>;
+
+  const renderGist = ({ id, description, date, recommended }) => {
+    return (
+      <tr key={id} onClick={() => selectGist(id)}>
+        <td>{description}</td>
+        <td>{date}</td>
+        <td>{recommended && "x"}</td>
+      </tr>
+    );
+  };
+
+  return (
+    <table>
+      {userName}
+      <tbody>
+        <tr>
+          <th>description</th>
+          <th>date</th>
+          <th>recommended</th>
+        </tr>
+        {currentUser && currentUser.map((gist) => renderGist(gist))}
+      </tbody>
+    </table>
+  );
 }

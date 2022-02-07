@@ -157,7 +157,7 @@ var readSchema = buildSchema(`
     getGist(gistId:Int):Gist
   }
   type Mutation {
-      updateFavoriteGist(userId:Int gistId:Int, bol:Boolean):[Gist],
+      updateRecommendedGist(gistId:Int):Gist,
       
   }
 `);
@@ -171,7 +171,7 @@ var root = {
         gists = user.gists;
       }
     });
-    console.log(gists);
+
     return gists;
   },
 
@@ -186,27 +186,25 @@ var root = {
     return currentGist;
   },
 
-  updateFavoriteGist: (payload) => {
-    let currentGistIndex = -1;
-    const { userId, gistId, bol } = payload;
-    githubUsers.forEach((user) => {
-      if (userId === user.id && currentGistIndex < 0) {
-        currentGistIndex = user.gists.findIndex((el) => el.id === gistId);
-      }
-    });
+  updateRecommendedGist: (gistId) => {
+    //redo this to work with just gist Id
+    let currentGist = null;
+    let currentGistIndex = null;
     githubUsers.forEach((user, index) => {
-      if (userId === user.id) {
-        const currentGist = githubUsers[index].gists[currentGistIndex];
-        githubUsers[index].gists[currentGistIndex] = {
-          ...currentGist,
-          recommended: bol,
-        };
-        console.log(githubUsers[index].gists[currentGistIndex]);
-      }
+      if (currentGist) return;
+      currentGist = user.gists.find((el, index) => {
+        currentGistIndex = index;
+        return el.id === gistId.gistId;
+      });
+      if (!currentGist) return;
+      const isRecommended = currentGist.recommended === true ? false : true;
+      githubUsers[index].gists.splice(currentGistIndex, 1, {
+        ...currentGist,
+        recommended: isRecommended,
+      });
     });
-  },
-  getUserInfo: () => {
-    return "Hello worldoo!";
+
+    return currentGist;
   },
 };
 
