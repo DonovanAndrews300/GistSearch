@@ -55,7 +55,11 @@
   ```sh
   //client yarn start
   ```
-
+ 4.Tips for using the app
+    -Type in the name of the users your searching for (I manually created the database so only users are Paul,Joey,and Jack)
+    -You can click the recommend button to only show gists that are recommended 
+    -you can view the gist details of a specific gist by clickng on it
+    -you can mark a perticular gist as recommended by clicking the checkbox in the gist details
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
