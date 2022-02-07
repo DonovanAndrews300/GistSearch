@@ -71,7 +71,7 @@ Donovan Andrews- Donovanandrews300@gmail.com
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
-Shout out to Skyspecs for present the challenge!
+Shout out to Skyspecs for presenting the challenge!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
